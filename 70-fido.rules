@@ -1,0 +1,21 @@
+# Правила udev для Pico FIDO и других FIDO-ключей безопасности
+# Установка: sudo cp 70-fido.rules /etc/udev/rules.d/
+# Применение: sudo udevadm control --reload-rules && sudo udevadm trigger
+
+# Raspberry Pi Pico (RP2040) - VID 2E8A
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="2e8a", MODE="0666", TAG+="uaccess"
+
+# YubiKey - VID 1050
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", MODE="0666", TAG+="uaccess"
+
+# SoloKeys - VID 0483
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="0483", MODE="0666", TAG+="uaccess"
+
+# Google Titan - VID 18D1
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="18d1", MODE="0666", TAG+="uaccess"
+
+# NXP - VID 1FC9
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1fc9", MODE="0666", TAG+="uaccess"
+
+# Generic FIDO Usage Page (F1D0)
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ENV{ID_HIDRAW_USAGE_PAGE}=="f1d0", MODE="0666", TAG+="uaccess"
